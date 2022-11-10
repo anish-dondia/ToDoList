@@ -6,24 +6,36 @@ import Card from "../UI/Card";
 import "./ToDoList.css";
 
 const ToDoList = (props) => {
-  const [filteredYear, setFilteredYear] = useState('2020');
+  const [filteredYear, setFilteredYear] = useState("2020");
 
-  const filterChangeHandler = selectedYear => {
-    setFilteredYear(selectedYear); //get JAydip top explain this 
+  const filterChangeHandler = (selectedYear) => {
+    setFilteredYear(selectedYear); //get JAydip top explain this
   };
+
+  const filteredEntry = props.DUMMY_DATA.filter((entrys) => {
+    return entrys.date.getFullYear().toString() === filteredYear;
+  });
+
+  let entryContent = <p>No Entry Found!</p>;
+
+  if (filteredEntry.length > 0) {
+    entryContent = filteredEntry.map((mainEntry, index) => (
+      <ToDoListForm
+        key={index} //helps identify all the items e.g, date and entry separately
+        date={mainEntry.date}
+        entry={mainEntry.entry}
+      />
+    ));
+  }
 
   return (
     <div>
       <Card className="ToDoList">
-        <EntryFilter selected={filteredYear} onChangeFilter={filterChangeHandler}/>
-        <ToDoListForm
-          date={props.DUMMY_DATA[0].date}
-          entry={props.DUMMY_DATA[0].entry}
-        ></ToDoListForm>
-        <ToDoListForm
-          date={props.DUMMY_DATA[1].date}
-          entry={props.DUMMY_DATA[1].entry}
-        ></ToDoListForm>
+        <EntryFilter
+          selected={filteredYear}
+          onChangeFilter={filterChangeHandler}
+        />
+        {entryContent}
       </Card>
     </div>
   );
