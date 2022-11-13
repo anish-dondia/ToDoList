@@ -16,14 +16,17 @@ const EntryForm = (props) => {
 
   const submitHandler = (event) => {
     event.preventDefault(event.target.value);
-
-    const entryData = {
-      entry: enteredEntry,
-      date: new Date(enteredDate),
-    };
-    props.OnSaveEntryData(entryData);
-    setEnteredEntry('');
-    setEnteredDate('');
+    if (!(enteredEntry.length === 0 || enteredDate.length === 0)) {
+      const entryData = {
+        entry: enteredEntry,
+        date: new Date(enteredDate),
+      };
+      props.OnSaveEntryData(entryData);
+      setEnteredEntry("");
+      setEnteredDate("");
+    } else {
+      alert("Entry Empty");
+    }
   };
 
   return (
@@ -31,7 +34,11 @@ const EntryForm = (props) => {
       <div className="new-entry__controls">
         <div className="new-entry__control">
           <label>Entry For Today</label>
-          <input type="text" value={enteredEntry} onChange={entryChangeHandler} />
+          <input
+            type="text"
+            value={enteredEntry}
+            onChange={entryChangeHandler}
+          />
         </div>
         <div className="new-entry__control">
           <label>Date</label>

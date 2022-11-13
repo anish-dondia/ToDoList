@@ -9,7 +9,7 @@ const ToDoList = (props) => {
   const [filteredYear, setFilteredYear] = useState("2020");
 
   const filterChangeHandler = (selectedYear) => {
-    setFilteredYear(selectedYear); //get JAydip top explain this
+    setFilteredYear(selectedYear); 
   };
 
   const filteredEntry = props.DUMMY_DATA.filter((entrys) => {
